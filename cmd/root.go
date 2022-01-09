@@ -14,7 +14,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "kube-sample",
 	Short: "A brief description of your application",
-	Long: `A shorter description that spans multiple lines and likely contains
+	Long: `A shorter2 description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
 
 Cobra is a CLI library for Go that empowers applications.
