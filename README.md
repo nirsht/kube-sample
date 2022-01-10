@@ -3,5 +3,5 @@
 Installation
 
 ```bash
-    go intall github.com/NirSht/kube-sample
+    go install github.com/NirSht/kube-sample
 ```
