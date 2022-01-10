@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Nir Shtein nir@komodor.io
+Copyright © 2022 Nir Shtein nir.sht1@gmail.com
 
 */
 package main
