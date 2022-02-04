@@ -3,7 +3,7 @@ module github.com/nirsht/kube-sample
 go 1.17
 
 require (
-	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
+	github.com/mithrandie/go-file/v2 v2.0.2
 	github.com/spf13/cobra v1.3.0
 )
 
