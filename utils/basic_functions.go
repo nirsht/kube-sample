@@ -18,7 +18,7 @@ func StringInSlice(a string, list []string) bool {
 func IsFileExists(directory string, filename string) bool {
 	filePath := fmt.Sprintf("%v/%v", directory, filename)
 	if _, err := os.Stat(filePath); errors.Is(err, os.ErrNotExist) {
-		return true
+		return false
 	}
-	return false
+	return true
 }

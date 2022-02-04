@@ -34,16 +34,19 @@ func initializeCreate(args []string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	template, err := kubernetes_supported_resources.CreateTemplate(*kubernetesResource)
 	if err != nil {
 		return nil, err
 	}
-	wantedFileName := fmt.Sprintf("%v.%v", "", ".yamls")
-	targetFileName, err := utils.GenerateFileName(wantedFileName)
+
+	targetFileName, err := utils.GenerateFileName(kubernetesResource.Name)
 	if err != nil {
 		return nil, err
 	}
-	if err = os.WriteFile(string(targetFileName), template, 0644); err != nil {
+
+	targetFilePath := fmt.Sprintf("%v.%v", string(targetFileName), "yaml")
+	if err = os.WriteFile(targetFilePath, template, 0644); err != nil {
 		return nil, err
 	}
 

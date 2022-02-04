@@ -14,7 +14,7 @@ func GenerateFileName(wantedFileName string) ([]byte, error) {
 	fileName := wantedFileName
 	for {
 		if index != 0 {
-			fileName = fmt.Sprintf("%v (%v)", wantedFileName, index)
+			fileName = fmt.Sprintf("%v (%v).%v", wantedFileName, index, "yaml")
 		}
 		if !IsFileExists(path, fileName) {
 			return []byte(fileName), nil

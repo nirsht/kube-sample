@@ -2,6 +2,7 @@ package kubernetes_supported_resources
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/nirsht/kube-sample/kubernetes_supported_resources/manifest"
 	"github.com/nirsht/kube-sample/utils"
@@ -14,9 +15,13 @@ type KubernetesResource struct {
 }
 
 const deployment = "Deployment"
+const daemonSet = "DaemonSet"
+const pod = "Pod"
 
 var resourcesMap = map[string]KubernetesResource{
-	deployment: {Name: deployment, Content: manifest.Deployment, Aliases: []string{"deploy"}},
+	deployment: {Name: deployment, Content: strings.TrimSpace(manifest.Deployment), Aliases: []string{"deploy", "deployments", strings.ToLower(deployment)}},
+	daemonSet:  {Name: daemonSet, Content: strings.TrimSpace(manifest.DaemonSet), Aliases: []string{"ds", "deployments", strings.ToLower(daemonSet)}},
+	pod:        {Name: pod, Content: strings.TrimSpace(manifest.Pod), Aliases: []string{"pods", strings.ToLower(pod)}},
 }
 
 func GetTypeByAlias(alias string) (*KubernetesResource, error) {
