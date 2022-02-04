@@ -35,4 +35,6 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	rootCmd.AddCommand(createCmd)
+	createCmd.PersistentFlags().BoolP("run", "r", false, "Also run the yaml file with kubectl")
+	createCmd.PersistentFlags().BoolP("apply", "a", false, "Also run the yaml file with kubectl, also if exists on the cluster")
 }

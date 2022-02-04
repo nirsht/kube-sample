@@ -20,16 +20,22 @@ of you requred resource`,
 			if len(args) < 1 {
 				cobra.CheckErr(fmt.Errorf("create command needs a name of the resource"))
 			}
-			fileName, err := initializeCreate(args)
+			run, _ := cmd.Flags().GetBool("run")
+			apply, _ := cmd.Flags().GetBool("apply")
+
+			output, err := initializeCreate(args, run, apply)
 			if err != nil {
 				cobra.CheckErr(err)
+			} else if output != nil {
+				fmt.Println(string(output))
 			}
-			fmt.Printf("Your file %q that contain resource type %q is ready", string(fileName), args[0])
+			fmt.Println("From kube-sample: ")
+			fmt.Println("Resource has been created successfully!!")
 		},
 	}
 )
 
-func initializeCreate(args []string) ([]byte, error) {
+func initializeCreate(args []string, run bool, apply bool) ([]byte, error) {
 	kubernetesResource, err := kubernetes_supported_resources.GetTypeByAlias(args[0])
 	if err != nil {
 		return nil, err
@@ -50,5 +56,11 @@ func initializeCreate(args []string) ([]byte, error) {
 		return nil, err
 	}
 
-	return targetFileName, err
+	if apply {
+		return utils.Run("kubectl", "apply", "-f", targetFilePath)
+	} else if run {
+		return utils.Run("kubectl", "create", "-f", targetFilePath)
+	}
+
+	return nil, err
 }
