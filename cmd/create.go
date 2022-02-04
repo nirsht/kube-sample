@@ -30,7 +30,7 @@ of you requred resource`,
 				fmt.Println(string(output))
 			}
 			fmt.Println("From kube-sample: ")
-			fmt.Println("Resource has been created successfully!!")
+			fmt.Println("Resource has been created successfully!!!")
 		},
 	}
 )
