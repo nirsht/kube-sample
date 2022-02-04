@@ -11,7 +11,7 @@
 ### Installation
 
 ```bash
-    go install github.com/NirSht/kube-sample
+    go install github.com/nirsht/kube-sample
 ```
 
 ### Installation in development
