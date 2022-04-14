@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 NAME HERE nir.sht1@gmail.com
 
 */
 package cmd
@@ -35,6 +35,12 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	rootCmd.AddCommand(createCmd)
-	createCmd.PersistentFlags().BoolP("run", "r", false, "Also run the yaml file with kubectl")
-	createCmd.PersistentFlags().BoolP("apply", "a", false, "Also run the yaml file with kubectl, also if exists on the cluster")
+	createCmd.PersistentFlags().BoolP("run", "r", false, "Run the yaml file with 'kubectl create'")
+	createCmd.PersistentFlags().BoolP("apply", "a", false, "Run the yaml file with kubectl, also if exists on the cluster")
+
+	rootCmd.AddCommand(clusterCmd)
+	clusterCmd.PersistentFlags().BoolP("delete", "d", false, "Delete the local cluster")
+	clusterCmd.PersistentFlags().StringP("cluster-type", "t", "kind", "Specify the kubernetes cluster you want to run")
+	clusterCmd.PersistentFlags().StringP("cluster-name", "n", "local-sample", "Specify the kubernetes cluster name")
+
 }

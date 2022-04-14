@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nirsht/kube-sample/kubernetes_supported_resources/manifest"
+	_ "embed"
+
 	"github.com/nirsht/kube-sample/utils"
 )
 
 type KubernetesResource struct {
-	Name    string
-	Content string
+	Kind    string
+	Content []byte
 	Aliases []string
 }
 
@@ -18,19 +19,27 @@ const deployment = "Deployment"
 const daemonSet = "DaemonSet"
 const pod = "Pod"
 
+//go:embed manifest/Deployment.yaml
+var deploymentYaml []byte
+
+//go:embed manifest/DaemonSet.yaml
+var daemonsetYaml []byte
+
+//go:embed manifest/Pod.yaml
+var podYaml []byte
+
+// TODO: Replace alias with aliases from kubectl api-resources
 var resourcesMap = map[string]KubernetesResource{
-	deployment: {Name: deployment, Content: strings.TrimSpace(manifest.Deployment), Aliases: []string{"deploy", "deployments", strings.ToLower(deployment)}},
-	daemonSet:  {Name: daemonSet, Content: strings.TrimSpace(manifest.DaemonSet), Aliases: []string{"ds", "deployments", strings.ToLower(daemonSet)}},
-	pod:        {Name: pod, Content: strings.TrimSpace(manifest.Pod), Aliases: []string{"pods", strings.ToLower(pod)}},
+	deployment: {deployment, deploymentYaml, []string{"deploy", "deployments", strings.ToLower(deployment)}},
+	daemonSet:  {daemonSet, daemonsetYaml, []string{"ds", "deployments", strings.ToLower(daemonSet)}},
+	pod:        {pod, podYaml, []string{"pods", strings.ToLower(pod)}},
 }
 
 func GetTypeByAlias(alias string) (*KubernetesResource, error) {
-	resource := &KubernetesResource{}
 	for _, value := range resourcesMap {
-		if utils.StringInSlice(alias, value.Aliases) || alias == value.Name {
-			resource = &value
-			return resource, nil
+		if utils.StringInSlice(alias, value.Aliases) || alias == value.Kind {
+			return &value, nil
 		}
 	}
-	return resource, fmt.Errorf("resource %v is not supported by this CLI", alias)
+	return nil, fmt.Errorf("resource %s is not supported by this CLI", alias)
 }

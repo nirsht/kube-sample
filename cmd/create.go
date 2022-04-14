@@ -29,8 +29,7 @@ of you requred resource`,
 			} else if output != nil {
 				fmt.Println(string(output))
 			}
-			fmt.Println("From kube-sample: ")
-			fmt.Println("Resource has been created successfully!!!")
+			fmt.Println("Kube-sample:\nResource has been created successfully!!!")
 		},
 	}
 )
@@ -41,18 +40,13 @@ func initializeCreate(args []string, run bool, apply bool) ([]byte, error) {
 		return nil, err
 	}
 
-	template, err := kubernetes_supported_resources.CreateTemplate(*kubernetesResource)
-	if err != nil {
-		return nil, err
-	}
-
-	targetFileName, err := utils.GenerateFileName(kubernetesResource.Name)
+	targetFileName, err := utils.GenerateFileName(kubernetesResource.Kind)
 	if err != nil {
 		return nil, err
 	}
 
 	targetFilePath := fmt.Sprintf("%v.%v", string(targetFileName), "yaml")
-	if err = os.WriteFile(targetFilePath, template, 0644); err != nil {
+	if err = os.WriteFile(targetFilePath, kubernetesResource.Content, 0644); err != nil {
 		return nil, err
 	}
 
