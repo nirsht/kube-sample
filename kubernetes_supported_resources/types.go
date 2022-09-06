@@ -28,9 +28,17 @@ var daemonsetYaml []byte
 //go:embed manifest/Pod.yaml
 var podYaml []byte
 
+//go:embed manifest/StatefulSet.yaml
+var statefulsetYaml []byte
+
+func getKindAliases() []string {
+
+	return []string{",as"}
+}
+
 // TODO: Replace alias with aliases from kubectl api-resources
 var resourcesMap = map[string]KubernetesResource{
-	deployment: {deployment, deploymentYaml, []string{"deploy", "deployments", strings.ToLower(deployment)}},
+	deployment: {deployment, deploymentYaml, bla()},
 	daemonSet:  {daemonSet, daemonsetYaml, []string{"ds", "deployments", strings.ToLower(daemonSet)}},
 	pod:        {pod, podYaml, []string{"pods", strings.ToLower(pod)}},
 }
